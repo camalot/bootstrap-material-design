@@ -19,23 +19,25 @@ $(function (){
 
         // Add elements for material inputs
         $("input.form-control, textarea.form-control, select.form-control").not(".bs-material").each( function() {
-            if ($(this).is(".bs-material")) { return; }
-            $(this).wrap("<div class=form-control-wrapper></div>");
-            $(this).after("<span class=material-input></span>");
-            if ($(this).hasClass("floating-label")) {
-                var placeholder = $(this).attr("placeholder");
-                $(this).attr("placeholder", null).removeClass("floating-label");
-                $(this).after("<div class=floating-label>" + placeholder + "</div>");
-            }
-            if ($(this).is(":empty") || $(this).val() === null || $(this).val() == "undefined" || $(this).val() === "") {
-                $(this).addClass("empty");
-            }
-
-            if ($(this).parent().next().is("[type=file]")) {
-                $(this).parent().addClass("fileinput");
-                var $input = $(this).parent().next().detach();
-                $(this).after($input);
-            }
+    			var $ctrl = $(this);
+    			if ($ctrl.is(".bs-material")) { return; }
+    			$ctrl.wrap("<div class=\"form-control-wrapper\"></div>")
+    				.addClass("bs-material")
+    				.after("<span class=\"material-input\"></span>");
+    			if ($ctrl.hasClass("floating-label")) {
+    				var placeholder = $ctrl.attr("placeholder");
+    				$ctrl.attr("placeholder", null).removeClass("floating-label")
+    					.after("<div class=floating-label>" + placeholder + "</div>");
+    			}
+    			if ($ctrl.is(":empty") || $ctrl.val() === null || $ctrl.val() === undefined || $ctrl.val() === "") {
+    				$ctrl.addClass("empty");
+    			}
+    			var $parent = $ctrl.parent();
+    			if ($parent.next().is("[type=file]")) {
+    				$parent.addClass("fileinput");
+    				var $input = $parent.next().detach();
+    				$ctrl.after($input);
+    			}
         });
 
     };
